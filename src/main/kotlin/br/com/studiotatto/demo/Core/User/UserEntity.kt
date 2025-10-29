@@ -11,7 +11,7 @@ import java.util.*
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null,
+    val id: UUID? = null,
 
     @Column(name = "name")
     var name: String = "",

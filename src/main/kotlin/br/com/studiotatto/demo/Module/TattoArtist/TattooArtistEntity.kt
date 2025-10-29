@@ -3,6 +3,7 @@ package br.com.studiotatto.demo.Module.TattooArtist
 import br.com.studiotatto.demo.Core.User.UserEntity
 import br.com.studiotatto.demo.Shared.AvailabilityStatus.AvailabilityStatusEntity
 import br.com.studiotatto.demo.Core.Style.StyleTattoEntity
+import br.com.studiotatto.demo.Core.User.Dto.TattooArtistRequestDto
 import br.com.studiotatto.demo.Module.Appointment.AppointmentEntity
 import br.com.studiotatto.demo.Module.Studio.StudioEntity
 import br.com.studiotatto.demo.Module.TattooGallery.TattooGalleryEntity
@@ -93,5 +94,19 @@ class TattooArtistEntity(
     @PreUpdate
     fun onUpdate() {
         updatedAt = Instant.now()
+    }
+
+    companion object {
+        fun from(dto: TattooArtistRequestDto, user: UserEntity, studio: StudioEntity, styles: MutableSet<StyleTattoEntity>, availability: AvailabilityStatusEntity): TattooArtistEntity {
+            return TattooArtistEntity(
+                user = user,
+                studio = studio,
+                artisticName = dto.artisticName,
+                bio = dto.bio ?: "",
+                styles = styles,
+                experienceYears = dto.experienceYears,
+                availabilityStatus = availability
+            )
+        }
     }
 }

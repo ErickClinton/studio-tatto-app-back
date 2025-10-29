@@ -1,5 +1,6 @@
 package br.com.studiotatto.demo.Module.Client
 
+import br.com.studiotatto.demo.Core.User.UserEntity
 import br.com.studiotatto.demo.Module.Address.AddressEntity
 import jakarta.persistence.*
 import java.time.Instant
@@ -13,6 +14,10 @@ class ClientEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: UserEntity,
 
     @OneToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinColumn(name = "address_id", nullable = false)
@@ -36,6 +41,7 @@ class ClientEntity(
 
     constructor() : this(
         id = null,
+        user = UserEntity(),
         address = AddressEntity(),
         birthDate = LocalDate.now(),
         preferences = null,
